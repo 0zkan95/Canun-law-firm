@@ -3,13 +3,15 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  /* --font-lora and --font-open-sans are already defined in layout.tsx by next/font */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-open-sans); /* Use Open Sans for default sans-serif */
+  --font-heading: var(--font-lora);   /* Use Lora for headings */
+  --font-mono: var(--font-geist-mono); /* Keep Geist Mono if still needed, or remove */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +24,49 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans); /* Apply the default body font */
+}
+
+/* Utility class for heading font */
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+/* Testimonial Slider Animations */
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/*
+  If you want an outgoing animation as well, it's more complex.
+  You'd typically need to render both the current and previous slide
+  during the transition, and apply an "out" animation to the previous.
+  This often requires a library or more intricate state management.
+  The current setup provides an "enter" animation for the new slide.
+*/
+
+.animate-slideInFromRight {
+  animation: slideInFromRight 0.5s ease-in-out forwards;
+}
+
+.animate-slideInFromLeft {
+  animation: slideInFromLeft 0.5s ease-in-out forwards;
 }

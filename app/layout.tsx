@@ -1,15 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Lora, Open_Sans } from 'next/font/google'; // Import Lora and Open_Sans
 import "./globals.css";
+import StickyHeaderWrapper from "./components/StickyHeaderWrapper";
+import Footer from "./components/Footer";
+import AOSInitializer from './components/AOSInitializer'; // Import AOSInitializer
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+// Configure Lora font (for headings and buttons)
+const lora = Lora({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-lora', // CSS variable for Lora
+  weight: ['400', '500', '600', '700'] // Weights for Lora
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+// Configure Open Sans font (for body text)
+const openSans = Open_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-open-sans', // CSS variable for Open Sans
+  weight: ['400', '500', '600', '700'] // Weights for Open Sans
 });
 
 export const metadata: Metadata = {
@@ -23,11 +32,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+    <html lang="en" className={`${lora.variable} ${openSans.variable} flex flex-col min-h-screen`}> 
+      <body className={`${openSans.className} flex flex-col flex-grow`}> 
+        <AOSInitializer /> {/* Initialize AOS */}
+        <StickyHeaderWrapper />
+        <main className="flex-grow">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
